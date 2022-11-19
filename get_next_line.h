@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 11:49:32 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/17 12:41:07 by ale-roux         ###   ########.fr       */
+/*   Created: 2022/11/19 00:31:41 by ale-roux          #+#    #+#             */
+/*   Updated: 2022/11/19 15:46:38 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 #  define BUFFER_SIZE 10
 # endif
 
-int		isline(char *buffer, int result);
+char	*endsave(char *str, int fd);
+char	*strcln2(char *save);
+char	*strcln(char *save);
 char	*get_next_line(int fd);
-char	*ft_strjoin(char *s1, char *s2, int res1, int res2);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strjoin(char const *s1, char const *s2);
 void	*ft_calloc(size_t count, size_t size);
-char	*endsave(char *str);
-int		isnl(char *str);
-int		endlen(char *str);
-int		ft_strlen(char *str);
-char	*strcln(char *str);
+void	*ft_bzero(void *str, size_t n);
+size_t	ft_strlen(char *str);
 
 #endif

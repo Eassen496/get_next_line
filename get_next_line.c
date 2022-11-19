@@ -6,16 +6,68 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 22:52:35 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/17 23:23:56 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/19 18:07:16 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char *get_next_line(int fd)
+#include "get_next_line.h"
+
+char	*fillbuffer(int fd)
 {
-	char	*str;
-	char	*save;
+	char	*buffer;
 	int		result;
 
+	buffer = ft_calloc(BUFFER_SIZE + 1, 1);
+	if (!buffer)
+		return (NULL);
+	result = read(fd, buffer, BUFFER_SIZE);
+	if (result == -1)
+	{
+		free(buffer);
+		return (NULL);
+	}
+	return (buffer);
+}
+
+char	*endsave(char *str, int fd)
+{
+	char	*buff;
+
+	if (!str)
+	{
+		str = fillbuffer(fd);
+		if (!str)
+			return (NULL);
+	}
+	buff = fillbuffer(fd);
+	if (!buff)
+		return (NULL);
+	return (ft_strjoin(str, buff));
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*save = NULL;
+	char		*line;
+	
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	save = endsave(NULL);
+	save = endsave(save, fd);
+	line = ft_substr(save, 0, ft_strchr(save, '\n');
+	save = ft_substr(save, ft_strchr(save, '\n'), ft_strlen(save) - ft_strchr(save, '\n'));
+	return (line);
+}
+
+/*
+#include <fcntl.h>
+#include <stdio.h>
+
+int	main(void)
+{
+	int fd = open("test", O_RDONLY);
+	printf("fichier: %d", fd);
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	return (0);
+}
+*/
