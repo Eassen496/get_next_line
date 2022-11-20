@@ -21,7 +21,9 @@ int	isnl(char *str)
 		i++;
 	if (str[i] == '\n')
 		return (i);
-	else 
+	else if (i == 0)
+		return (i);
+	else
 		return (-1);
 }
 
