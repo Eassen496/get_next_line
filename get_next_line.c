@@ -21,11 +21,8 @@ char	*fillbuffer(int fd)
 	if (!buffer)
 		return (NULL);
 	result = read(fd, buffer, BUFFER_SIZE);
-	if (result == -1)
-	{
-		free(buffer);
-		return (NULL);
-	}
+	if (result == -1 || result == 0)
+		return (ft_calloc(1, 1));
 	return (buffer);
 }
 
@@ -39,9 +36,13 @@ char	*endsave(char *str, int fd)
 		if (!str)
 			return (NULL);
 	}
-	buff = fillbuffer(fd);
-	if (!buff)
-		return (NULL);
+	while (isnl != -1)
+	{
+		buff = fillbuffer(fd);
+		if (!buff)
+			break ;
+	}
+	
 	return (ft_strjoin(str, buff));
 }
 
