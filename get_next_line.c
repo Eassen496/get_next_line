@@ -12,6 +12,19 @@
 
 #include "get_next_line.h"
 
+int	isnl(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		return (i);
+	else 
+		return (-1);
+}
+
 char	*fillbuffer(int fd)
 {
 	char	*buffer;
@@ -36,11 +49,12 @@ char	*endsave(char *str, int fd)
 		if (!str)
 			return (NULL);
 	}
-	while (isnl != -1)
+	while (isnl(str) != -1)
 	{
 		buff = fillbuffer(fd);
 		if (!buff)
 			break ;
+		ft_strjoin(str, buff);
 	}
 	
 	return (ft_strjoin(str, buff));
