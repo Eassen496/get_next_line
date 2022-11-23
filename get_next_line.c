@@ -6,7 +6,7 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 22:52:35 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/23 22:36:38 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/23 23:06:28 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ char	*get_next_line(int fd)
 	save = saveclnr(save);
 	return (line);
 }
-
 /*
 #include <fcntl.h>
 #include <stdio.h>

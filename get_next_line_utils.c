@@ -6,7 +6,7 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 00:28:50 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/23 22:30:16 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/23 22:55:27 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	if (!s1)
 		s1 = ft_calloc(1);
-	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	str = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (str == NULL)
 	{
 		free(s1);
