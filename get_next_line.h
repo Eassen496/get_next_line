@@ -6,7 +6,7 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 00:31:41 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/23 21:32:10 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/23 22:11:35 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@
 #  define BUFFER_SIZE 10
 # endif
 
-char            *get_next_line(int fd);
+char			*get_next_line(int fd);
 char			*ft_strchr(const char *s, int c);
-char	        *ft_strjoin(char *s1, char *s2);
-void        	*ft_calloc(unsigned int size);
-size_t	        ft_strlen(char *str);
-char	        *loadbuffer(char *str, int fd);
-char	        *saveclnr(char *str);
-int	            isnl(char *str);
-char	        *lineclnr(char *str);
+char			*ft_strjoin(char *s1, char *s2);
+void			*ft_calloc(unsigned int size);
+size_t			ft_strlen(char *str);
+char			*loadbuffer(char *str, int fd);
+char			*saveclnr(char *str);
+int				isnl(char *str);
+char			*lineclnr(char *str);
+char			*freeall(char *s1, char *s2);
 
 #endif

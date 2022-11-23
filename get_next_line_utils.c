@@ -6,7 +6,7 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 00:28:50 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/23 21:56:57 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/23 22:30:16 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,35 +30,35 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char    *ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-    size_t  i;
-    size_t  c;
-    char    *str;
+	unsigned int	i;
+	unsigned int	j;
+	char			*str;
 
-    if (!s1)
-        s1 = ft_calloc(1 * sizeof(char));
-    if (!s1 || !s2)
+	if (!s2)
+		return (NULL);
+	if (!s1)
+		s1 = ft_calloc(1);
+	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (str == NULL)
 	{
 		free(s1);
-        return (NULL);
+		return (NULL);
 	}
-	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-    if (str == NULL)
-        return (NULL);
-    i = -1;
-    c = 0;
-    if (s1)
-        while (s1[++i] != '\0')
-            str[i] = s1[i];
-    while (s2[c] != '\0')
-        str[i++] = s2[c++];
-    str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
-    free(s1);
-    return (str);
+	i = -1;
+	j = 0;
+	if (s1)
+		while (s1[++i] != '\0')
+			str[i] = s1[i];
+	while (s2[j] != '\0')
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	free(s1);
+	return (str);
 }
 
-void	*ft_calloc(unsigned int	size)
+void	*ft_calloc(unsigned int size)
 {
 	char			*ptr;
 	unsigned int	i;
@@ -85,4 +85,11 @@ size_t	ft_strlen(char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+char	*freeall(char *s1, char *s2)
+{
+	free(s1);
+	free(s2);
+	return (NULL);
 }

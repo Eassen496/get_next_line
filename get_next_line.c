@@ -6,7 +6,7 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 22:52:35 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/23 21:46:33 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/23 22:36:38 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,10 +90,7 @@ char	*loadbuffer(char *str, int fd)
 	{
 		readed = read(fd, buffer, BUFFER_SIZE);
 		if (readed == -1)
-		{
-			free(buffer);
-			return (NULL);
-		}
+			return (freeall(buffer, str));
 		buffer[readed] = '\0';
 		str = ft_strjoin(str, buffer);
 	}
@@ -105,7 +102,7 @@ char	*get_next_line(int fd)
 {
 	static char	*save = NULL;
 	char		*line;
-	
+
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	save = loadbuffer(save, fd);
