@@ -12,6 +12,30 @@
 
 #include "get_next_line.h"
 
+char	*lineclnr(char *str)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	if (save[0] == '\0')
+		return (NULL);
+	ret = ft_calloc((isnl(str) + 2) * sizeof(char));
+	if (!ret)
+		return (NULL);
+	while (save[i] && save[i] != '\n')
+	{
+		ret[i] = save[i];
+		i++;
+	}
+	if (save[i] == '\n')
+	{
+		ret[i] = save[i];
+		i++;
+	}
+	return (ret);
+}
+
 int	isnl(char *str)
 {
 	int	i;
@@ -27,39 +51,52 @@ int	isnl(char *str)
 		return (-1);
 }
 
-char	*fillbuffer(int fd)
+char	*saveclnr(char *str)
 {
-	char	*buffer;
-	int		result;
+	int		i;
+	int		j;
+	char	*ret;
 
-	buffer = ft_calloc(BUFFER_SIZE + 1, 1);
-	if (!buffer)
+	i = isnl(str);
+	if (i == -1)
+	{
+		free(str);
 		return (NULL);
-	result = read(fd, buffer, BUFFER_SIZE);
-	if (result == -1 || result == 0)
-		return (ft_calloc(1, 1));
-	return (buffer);
+	}
+	ret = ft_calloc((ft_strlen(str) - i + 1) * sizeof(char));
+	if (!ret)
+		return (NULL);
+	i++;
+	j = 0;
+	while (str[i])
+		ret[j++] = save[i++];
+	free(str);
+	return (ret);
 }
 
-char	*endsave(char *str, int fd)
+char	*loadbuffer(char *str, int fd)
 {
-	char	*buff;
+	char	*buffer;
+	int		readed;
 
-	if (!str)
+	if (!save)
+		str = "\0\0";
+	buffer = ft_calloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buffer)
+		return (NULL);
+	readed = 1;
+	while (ft_strchr(str, '\n') != -1 && readed != 0)
 	{
-		str = fillbuffer(fd);
-		if (!str)
+		readed = read(fd, buffer, BUFFER_SIZE);
+		if (readed == -1)
+		{
+			free(buffer);
 			return (NULL);
+		}
+		str = ft_strjoin(str, buffer);
 	}
-	while (isnl(str) != -1)
-	{
-		buff = fillbuffer(fd);
-		if (!buff)
-			break ;
-		ft_strjoin(str, buff);
-	}
-	
-	return (ft_strjoin(str, buff));
+	free(buffer);
+	return (str);
 }
 
 char	*get_next_line(int fd)
@@ -69,9 +106,11 @@ char	*get_next_line(int fd)
 	
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	save = endsave(save, fd);
-	line = ft_substr(save, 0, ft_strchr(save, '\n');
-	save = ft_substr(save, ft_strchr(save, '\n'), ft_strlen(save) - ft_strchr(save, '\n'));
+	save = loadbuffer(save, fd);
+	if (!save)
+		return (NULL);
+	line = lineclnr(save);
+	save = saveclnr(save);
 	return (line);
 }
 
