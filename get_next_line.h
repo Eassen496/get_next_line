@@ -6,7 +6,7 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 00:31:41 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/19 15:46:38 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/23 21:32:10 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # endif
 
 char            *get_next_line(int fd);
-int             ft_strchr(const char *s, int c);
-char	        *ft_strjoin(char const *s1, char const *s2);
+char			*ft_strchr(const char *s, int c);
+char	        *ft_strjoin(char *s1, char *s2);
 void        	*ft_calloc(unsigned int size);
 size_t	        ft_strlen(char *str);
 char	        *loadbuffer(char *str, int fd);

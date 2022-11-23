@@ -6,7 +6,7 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 22:52:35 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/19 18:07:16 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/23 21:46:33 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,19 @@ char	*lineclnr(char *str)
 	char	*ret;
 
 	i = 0;
-	if (save[0] == '\0')
+	if (!str[0])
 		return (NULL);
 	ret = ft_calloc((isnl(str) + 2) * sizeof(char));
 	if (!ret)
 		return (NULL);
-	while (save[i] && save[i] != '\n')
+	while (str[i] && str[i] != '\n')
 	{
-		ret[i] = save[i];
+		ret[i] = str[i];
 		i++;
 	}
-	if (save[i] == '\n')
+	if (str[i] == '\n')
 	{
-		ret[i] = save[i];
+		ret[i] = str[i];
 		i++;
 	}
 	return (ret);
@@ -43,12 +43,7 @@ int	isnl(char *str)
 	i = 0;
 	while (str[i] && str[i] != '\n')
 		i++;
-	if (str[i] == '\n')
-		return (i);
-	else if (i == 0)
-		return (i);
-	else
-		return (-1);
+	return (i);
 }
 
 char	*saveclnr(char *str)
@@ -58,18 +53,21 @@ char	*saveclnr(char *str)
 	char	*ret;
 
 	i = isnl(str);
-	if (i == -1)
+	j = 0;
+	if (!str[i])
 	{
 		free(str);
 		return (NULL);
 	}
 	ret = ft_calloc((ft_strlen(str) - i + 1) * sizeof(char));
 	if (!ret)
+	{
+		free(str);
 		return (NULL);
+	}
 	i++;
-	j = 0;
 	while (str[i])
-		ret[j++] = save[i++];
+		ret[j++] = str[i++];
 	free(str);
 	return (ret);
 }
@@ -79,13 +77,16 @@ char	*loadbuffer(char *str, int fd)
 	char	*buffer;
 	int		readed;
 
-	if (!save)
-		str = "\0\0";
+	if (!str)
+		str = ft_calloc(1);
 	buffer = ft_calloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
+	{
+		free(str);
 		return (NULL);
+	}
 	readed = 1;
-	while (ft_strchr(str, '\n') != -1 && readed != 0)
+	while (!ft_strchr(str, '\n') && readed != 0)
 	{
 		readed = read(fd, buffer, BUFFER_SIZE);
 		if (readed == -1)
@@ -93,6 +94,7 @@ char	*loadbuffer(char *str, int fd)
 			free(buffer);
 			return (NULL);
 		}
+		buffer[readed] = '\0';
 		str = ft_strjoin(str, buffer);
 	}
 	free(buffer);

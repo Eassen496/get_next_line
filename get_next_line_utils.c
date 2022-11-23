@@ -6,13 +6,13 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 00:28:50 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/19 18:16:11 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/23 21:56:57 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
 	int	i;
 
@@ -22,36 +22,40 @@ int	ft_strchr(const char *s, int c)
 	while (s[i])
 	{
 		if (s[i] == (char)c)
-			return (i);
+			return ((char *)&s[i]);
 		i++;
 	}
 	if (s[i] == (char)c)
-		return (i);
-	return (-1);
+		return ((char *)&s[i]);
+	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char    *ft_strjoin(char *s1, char *s2)
 {
-	int		i;
-	int		x;
-	char	*str;
+    size_t  i;
+    size_t  c;
+    char    *str;
 
-	if (s1 || !s2)
-		return (NULL);
-	i = ft_strlen((char *)s1);
-	x = ft_strlen((char *)s2);
-	str = ft_calloc((i + x + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	x = 0;
-	while (s1 && s1[x])
-		str[i++] = s1[x++];
-	x = 0;
-	while (s2[x])
-		str[i++] = s2[x++];
-	free((char *)s1);
-	return (str);
+    if (!s1)
+        s1 = ft_calloc(1 * sizeof(char));
+    if (!s1 || !s2)
+	{
+		free(s1);
+        return (NULL);
+	}
+	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+    if (str == NULL)
+        return (NULL);
+    i = -1;
+    c = 0;
+    if (s1)
+        while (s1[++i] != '\0')
+            str[i] = s1[i];
+    while (s2[c] != '\0')
+        str[i++] = s2[c++];
+    str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
+    free(s1);
+    return (str);
 }
 
 void	*ft_calloc(unsigned int	size)
@@ -65,7 +69,7 @@ void	*ft_calloc(unsigned int	size)
 		return (NULL);
 	while (i < size)
 	{
-		ptr[i] = 0;
+		ptr[i] = '\0';
 		i++;
 	}
 	return (ptr);
