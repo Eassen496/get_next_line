@@ -6,7 +6,7 @@
 /*   By: ale-roux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 22:52:35 by ale-roux          #+#    #+#             */
-/*   Updated: 2022/11/23 23:13:05 by ale-roux         ###   ########.fr       */
+/*   Updated: 2022/11/24 00:56:46 by ale-roux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,16 +100,16 @@ char	*loadbuffer(char *str, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*save = NULL;
+	static char	*save[4096];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	save = loadbuffer(save, fd);
-	if (!save)
+	save[fd] = loadbuffer(save[fd], fd);
+	if (!save[fd])
 		return (NULL);
-	line = lineclnr(save);
-	save = saveclnr(save);
+	line = lineclnr(save[fd]);
+	save[fd] = saveclnr(save[fd]);
 	return (line);
 }
 /*
